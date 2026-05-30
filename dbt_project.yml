@@ -32,26 +32,25 @@ clean-targets:         # directories to be removed by `dbt clean`
 models:
   stocks_project:
     # Config indicated by + and applies to all files under models/example/
-    example:
-      +materialized: view
     
     staging:
       +materialized: table
 
     intermediate:
-      +materialized: table
+      int_volume_per_day:
+        +materialized: view
+      int_stocks_per_day:
+      +materialized: table  
 
-    marts:
-      +materialized: table
 
 seeds:
   stocks_project:
-    stock_prices:
+    df_denormalized:
       +column_types:
         date: date
-        ticker: varchar
-        close: double
-        high: double
-        low: double
-        open: double
-        volume: bigint
+        Ticker: varchar   
+        Close: double     
+        High: double       
+        Low: double       
+        Open: double      
+        Volume: bigint
