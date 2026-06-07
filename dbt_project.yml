@@ -34,13 +34,19 @@ models:
     # Config indicated by + and applies to all files under models/example/
     
     staging:
-      +materialized: table
+      +schema: staging
+      stocks_raw:
+        +materialized: table
+      stg_ticker_categories:
+        +materialized: table
+
 
     intermediate:
+      +schema: intermediate
       int_volume_per_day:
         +materialized: view
       int_stocks_per_day:
-      +materialized: table  
+        +materialized: table  
 
 
 seeds:
@@ -54,3 +60,9 @@ seeds:
         Low: double       
         Open: double      
         Volume: bigint
+    ticker_categories:
+      +column_types:
+        ticker: varchar
+        sector: varchar
+        industry: varchar
+        market_cap_category: varchar

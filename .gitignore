@@ -6,3 +6,5 @@ logs/
 # environment files
 .env
 profiles.yml
+*.duckdb
+*.duckdb.wal

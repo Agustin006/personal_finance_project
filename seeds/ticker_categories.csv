@@ -1,0 +1,26 @@
+ticker,sector,industry,market_cap_category
+AAPL,Technology,Consumer Electronics,Large Cap
+MSFT,Technology,Software,Large Cap
+GOOGL,Technology,Internet Services,Large Cap
+NVDA,Technology,Semiconductors,Large Cap
+META,Technology,Social Media,Large Cap
+AMZN,Technology,E-Commerce,Large Cap
+ORCL,Technology,Enterprise Software,Large Cap
+AVGO,Technology,Semiconductors,Large Cap
+JPM,Finance,Banking,Large Cap
+BAC,Finance,Banking,Large Cap
+V,Finance,Payments,Large Cap
+MA,Finance,Payments,Large Cap
+BRK-B,Finance,Insurance,Large Cap
+JNJ,Healthcare,Pharmaceuticals,Large Cap
+LLY,Healthcare,Pharmaceuticals,Large Cap
+MRK,Healthcare,Pharmaceuticals,Large Cap
+UNH,Healthcare,Insurance,Large Cap
+ABBV,Healthcare,Pharmaceuticals,Large Cap
+XOM,Energy,Oil & Gas,Large Cap
+CVX,Energy,Oil & Gas,Large Cap
+WMT,Consumer,Retail,Large Cap
+COST,Consumer,Retail,Large Cap
+PG,Consumer,Consumer Goods,Large Cap
+HD,Consumer,Home Improvement,Large Cap
+TSLA,Consumer,Electric Vehicles,Large Cap
