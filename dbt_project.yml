@@ -45,8 +45,10 @@ models:
       +schema: intermediate
       int_volume_per_day:
         +materialized: view
-      int_stocks_per_day:
+      int_volume_per_sector:
         +materialized: table  
+      int_stocks_daily:
+        +materialized: view
 
 
 seeds:
