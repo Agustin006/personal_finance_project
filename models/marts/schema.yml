@@ -1,0 +1,38 @@
+version: 2
+
+models:
+  - name: dim_ticker_category
+    description: "One row per ticker, describing its sector/industry/market cap classification."
+    columns:
+      - name: ticker
+        description: "Stock ticker symbol — primary key of this dimension"
+        data_tests:
+          - unique
+          - not_null
+
+  - name: fct_stock_daily
+    description: >
+      Fact table: one row per ticker per trading day. Grain = (date, ticker).
+      Combines price, volume, and trend metrics from int_stocks_daily with
+      sector/industry classification from dim_ticker_category.
+    columns:
+      - name: stock_daily_id
+        description: "Surrogate key: date + ticker, concatenated"
+        data_tests:
+          - unique
+          - not_null
+
+      - name: date
+        description: "Trading date"
+        data_tests:
+          - not_null
+
+      - name: ticker
+        description: "Stock ticker symbol"
+        data_tests:
+          - not_null
+
+      - name: close
+        description: "Closing price"
+        data_tests:
+          - not_null
