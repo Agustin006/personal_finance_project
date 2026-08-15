@@ -26,7 +26,7 @@ def fetch_ticker_data():
               df.index.name if df.index.name else 'level_0': 'date'
           })
     )
-    
+
     before = len(df_denormalized)
     df_denormalized = df_denormalized.dropna()
     after = len(df_denormalized)
@@ -43,18 +43,17 @@ def fetch_ticker_data():
     return df_denormalized
 
 
-def load_to_duckdb(df_denormalized, db_path=DEFAULT_DB_PATH):
+def load_to_duckdb(source_df, db_path=DEFAULT_DB_PATH):
     con = duckdb.connect(db_path)
     con.execute("CREATE SCHEMA IF NOT EXISTS raw")
     con.execute("""
         CREATE OR REPLACE TABLE raw.stock_prices AS
-        SELECT * FROM df_denormalized
+        SELECT * FROM source_df
     """)
     con.close()
-    print(f"Loaded {len(df_denormalized)} rows into raw.stock_prices")
+    print(f"Loaded {len(source_df)} rows into raw.stock_prices")
 
 
 if __name__ == "__main__":
     df = fetch_ticker_data()
-    print(df.columns.tolist())   # <-- important, see note below
     load_to_duckdb(df)
