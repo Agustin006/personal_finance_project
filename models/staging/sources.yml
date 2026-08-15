@@ -1,0 +1,10 @@
+version: 2
+
+sources:
+  - name: raw
+    schema: raw
+    tables:
+      - name: stock_prices
+        description: >
+          Daily OHLCV stock price data, loaded by scripts/download_stock_data.py
+          via the yfinance API. Rolling ~30-day window, fully overwritten on each run.
