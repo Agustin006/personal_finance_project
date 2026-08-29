@@ -14,8 +14,7 @@ select
     d.volume,
     d.daily_change,
     d.daily_change_pct,
-    d.daily_trend,
-    d.is_new_high
+    d.daily_trend
 from {{ ref('int_stocks_daily') }} d
 left join {{ ref('dim_ticker_category') }} c
     on d.ticker = c.ticker

@@ -1,3 +1,7 @@
+{{ config(
+    materialized='incremental',
+    unique_key=['date', 'ticker']
+) }}
 
 with stocks_calculation as ( 
     SELECT
@@ -14,14 +18,13 @@ with stocks_calculation as (
                 WHEN close > open THEN 'up'
                 WHEN close < open THEN 'down'
                 ELSE 'no_change'
-            END AS daily_trend,
-        max(high) OVER (PARTITION BY ticker) AS max_high
+            END AS daily_trend
     FROM {{ ref('stocks_raw') }}
 )
 SELECT 
-    *,
-    CASE 
-        WHEN high >= max_high THEN 'new_high'
-        ELSE 'not_new_high'
-    END AS is_new_high
+    *
 FROM stocks_calculation
+
+{% if is_incremental() %}
+where date > (select max(date) from {{ this }})
+{% endif %}
