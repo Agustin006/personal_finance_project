@@ -10,4 +10,4 @@ select
     "Low"::double   as low,
     "Close"::double as close,
     "Volume"::bigint as volume
-from {{ ref('df_denormalized') }}
+from {{ source('raw', 'stock_prices') }}
