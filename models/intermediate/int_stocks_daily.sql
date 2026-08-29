@@ -1,3 +1,7 @@
+{{ config(
+    materialized='incremental',
+    unique_key=['date', 'ticker']
+) }}
 
 with stocks_calculation as ( 
     SELECT
@@ -20,3 +24,7 @@ with stocks_calculation as (
 SELECT 
     *
 FROM stocks_calculation
+
+{% if is_incremental() %}
+where date > (select max(date) from {{ this }})
+{% endif %}
