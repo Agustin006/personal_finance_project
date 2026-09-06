@@ -40,3 +40,7 @@ jobs:
 
       - name: Run dbt tests
         run: dbt test
+
+      - name: Upload DuckDB state to S3
+        if: success()
+        run: aws s3 cp ./dev.duckdb s3://as-personal-finance-project/dev.duckdb
