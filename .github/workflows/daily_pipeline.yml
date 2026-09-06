@@ -1,0 +1,46 @@
+name: Daily Stock Pipeline
+
+on:
+  schedule:
+    - cron: '0 13 * * 1-5'
+  workflow_dispatch:
+
+jobs:
+  run-pipeline:
+    runs-on: ubuntu-latest
+    env:
+      DBT_PROFILES_DIR: ${{ github.workspace }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.1'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-2
+
+      - name: Download DuckDB state from S3
+        run: aws s3 cp s3://as-personal-finance-project/dev.duckdb ./dev.duckdb
+
+      - name: Run stock data download script
+        run: python scripts/download_stock_data.py
+
+      - name: Run dbt models
+        run: dbt run
+
+      - name: Run dbt tests
+        run: dbt test
+
+      - name: Upload DuckDB state to S3
+        if: success()
+        run: aws s3 cp ./dev.duckdb s3://as-personal-finance-project/dev.duckdb
