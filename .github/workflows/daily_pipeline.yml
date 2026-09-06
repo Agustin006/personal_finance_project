@@ -31,3 +31,12 @@ jobs:
 
       - name: Download DuckDB state from S3
         run: aws s3 cp s3://as-personal-finance-project/dev.duckdb ./dev.duckdb
+
+      - name: Run stock data download script
+        run: python scripts/download_stock_data.py
+
+      - name: Run dbt models
+        run: dbt run
+
+      - name: Run dbt tests
+        run: dbt test
