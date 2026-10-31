@@ -4,7 +4,7 @@ select
     cast(d.date as varchar) || '-' || d.ticker as stock_daily_id,
     d.date,
     d.ticker,
-    c.sector,
+    UPPER(c.sector) as c.sector,
     c.industry,
     c.market_cap_category,
     d.open,
